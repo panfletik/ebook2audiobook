@@ -37,7 +37,7 @@ models = {
             "sv_SE": ["sv_SE-nst-medium", "sv_SE-nst-medium"],
             "sw_CD": ["sw_CD-lanfrica-medium", "sw_CD-lanfrica-medium"],
             "tr_TR": ["tr_TR-dfki-medium", "tr_TR-dfki-medium"],
-            "uk_UA": ["uk_UA-ukrainian_tts-medium", "uk_UA-lada-x_low"],
+            "uk_UA": ["uk_UA-tetiana-high", "uk_UA-mykyta-high", "uk_UA-oleksa-high", "uk_UA-ukrainian_tts-medium", "uk_UA-lada-x_low"],
             "ur_PK": ["ur_PK-fasih-medium", "ur_PK-fasih-medium"],
             "vi_VN": ["vi_VN-vais1000-medium", "vi_VN-25hours_single-low"],
             "zh_CN": ["zh_CN-huayan-medium", "zh_CN-huayan-medium"]

@@ -6,4 +6,5 @@ from .tortoise import Tortoise
 from .glowtts import GlowTTS
 from .tacotron import Tacotron2
 from .piper import Piper
+from .styletts2 import StyleTTS2
 from .yourtts import YourTTS

@@ -69,4 +69,12 @@ transformers==4.57.6; python_version < '3.12'
 transformers>=5.0.0; python_version >= '3.12'
 coqui-tts[languages]==0.27.5
 piper-tts==1.4.2
+# StyleTTS2 ukrainian (patriotyk) - ukrainian stress prediction + IPA front-end
+einops-exts
+munch
+marisa-trie
+ukrainian_accentor @ git+https://github.com/egorsmkv/ukrainian-accentor@main
+ukrainian_word_stress @ git+https://github.com/patriotyk/ukrainian-word-stress.git
+ipa_uk @ git+https://github.com/patriotyk/ipa-uk.git
+styletts2_inference @ git+https://github.com/patriotyk/styletts2-inference@209352700cf703a05ff94501290095dd9072fd5f
 ./ext/py/demucs

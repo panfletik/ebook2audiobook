@@ -1793,6 +1793,7 @@ def build_interface(args:dict)->gr.Blocks:
                         eng_options = []
                         bark_options = []
                         piper_options = []
+                        styletts2_options = []
                         builtin_dir = Path(os.path.join(voices_dir, lang_dir))
                         builtin_options = [
                             (base, str(f))
@@ -1830,7 +1831,14 @@ def build_interface(args:dict)->gr.Blocks:
                                     display_name = f'Speaker {voices_map.get(file_stem, file_stem)}'
                                     wav_path = str(f.with_suffix('.wav'))
                                     piper_options.append((display_name, wav_path))
-                        voice_options = builtin_options + eng_options + bark_options + piper_options
+                        elif session['tts_engine'] == TTS_ENGINES['STYLETTS2']:
+                            engine_config = default_engine_settings[TTS_ENGINES['STYLETTS2']]
+                            speakers_path = Path(engine_config['speakers_path'])
+                            voices_map = engine_config['voices']
+                            for f in sorted(speakers_path.glob('*.pt')):
+                                display_name = voices_map.get(f.stem, f.stem)
+                                styletts2_options.append((display_name, str(f.with_suffix('.wav'))))
+                        voice_options = builtin_options + eng_options + bark_options + piper_options + styletts2_options
                         session['voice_dir'] = os.path.join(voices_dir, '__sessions', f'voice-{session_id}', language)
                         os.makedirs(session['voice_dir'], exist_ok=True)
                         if session['voice_dir'] is not None:
