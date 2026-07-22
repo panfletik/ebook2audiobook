@@ -189,7 +189,15 @@ class StyleTTS2(TTSUtils, TTSRegistry, name='styletts2'):
                                 )
                         if audio_part is not None and len(audio_part) > 0:
                             if torch.is_tensor(audio_part):
-                                audio_part = audio_part.detach().cpu()
+                                # On CUDA the model returns half precision, and
+                                # soundfile refuses float16 ("dtype must be one of
+                                # float32, float64, int16, int32"), so the save
+                                # fails at the very last step. Normalize here.
+                                audio_part = audio_part.detach().cpu().float()
+                            elif str(getattr(audio_part, 'dtype', '')) == 'float16':
+                                # numpy path — headers.py doesn't import numpy,
+                                # so compare the dtype by name rather than object.
+                                audio_part = audio_part.astype('float32')
                             if not is_audio_data_valid(audio_part):
                                 error = 'audio_part not valid'
                                 return False, error
