@@ -805,7 +805,12 @@ class DeviceInstaller():
                 if not devices['CUDA']['found'] and has_cmd('nvidia-smi'):
                     out = try_cmd('nvidia-smi')
                     # Header line: '| NVIDIA-SMI ...  Driver Version: ...  CUDA Version: 12.4 |'
-                    m = re.search(r'cuda\s*version\s*:?\s*([0-9]+(?:\.[0-9]+)?)', out, re.IGNORECASE)
+                    # Under WSL2 the header reads 'CUDA UMD Version: 13.3' instead, so
+                    # allow the extra token — otherwise a perfectly good GPU (no /dev/nvidia*,
+                    # no toolkit, CPU-only torch) falls all the way through to cpu.
+                    m = re.search(
+                        r'cuda\s*(?:umd\s*)?version\s*:?\s*([0-9]+(?:\.[0-9]+)?)', out, re.IGNORECASE
+                    )
                     if m:
                         smi_version = m.group(1)
                         cmp, current, min_tuple, max_tuple = version_classify(smi_version, cuda_version_range)
