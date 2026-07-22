@@ -179,6 +179,12 @@ class StyleTTS2(TTSUtils, TTSRegistry, name='styletts2'):
                         if not part_ipa:
                             continue
                         tokens = self.engine.tokenizer.encode(part_ipa)
+                        # The tokenizer always builds on CPU; the model lives on
+                        # self.device. Handing it a CPU index tensor fails inside
+                        # index_select ("index is on cpu, different from other
+                        # tensors on cuda:0") the moment a real conversion starts.
+                        if torch.is_tensor(tokens):
+                            tokens = tokens.to(self.device)
                         style = self._get_style(self.params['current_voice'], tokens)
                         with torch.inference_mode():
                             with torch.autocast(self.device, dtype=self.amp_dtype, enabled=(self.amp_dtype != torch.float32)):
